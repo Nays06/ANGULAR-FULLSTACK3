@@ -1,0 +1,19 @@
+<h1>Корзина</h1>
+<div class="basket">
+  {{ getBasket() }}
+
+  @for (product of basket; track $index) {
+    <div class="card" key="$index">
+      <div class="img-card">
+        <img width="100px" [src]="product.image" alt="" />
+      </div>
+      <div class="card-info">
+        <p class="card-title">{{ product.name }}</p>
+        <div class="card-description">{{ product.description }}</div>
+        <p class="card-price">{{ product.price }}</p>
+        <button (click)="removeProductBasket(product)" class="remove-from-cart-btn">Удалить из корзины</button>
+      </div>
+    </div>
+  }
+</div>
+
