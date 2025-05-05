@@ -6,9 +6,10 @@ const jwt = require("jsonwebtoken");
 const { secret } = require("./config");
 const mailer = require("./nodemailer");
 
-const generateAccessToken = (id) => {
+const generateAccessToken = (id, roles) => {
   const payload = {
     id,
+    roles
   };
   return jwt.sign(payload, secret, { expiresIn: "24h" });
 };
@@ -32,7 +33,7 @@ class authController {
           .json({ message: "Пользователь с тиаким именем уже существует" });
       }
       const hashPassword = bcrypt.hashSync(password, 8);
-      const userRole = await Role.findOne({ value: "User"});
+      const userRole = await Role.findOne({ value: "USER"});
 
       const user = new User({
         name,
@@ -42,10 +43,7 @@ class authController {
         password: hashPassword,
         roles: [userRole.value]
       });
-      console.log(req);
       if (req.file) {
-        console.log(req.file);
-        
         user.avatar = req.file.path;
       }
 
@@ -102,6 +100,17 @@ class authController {
     } catch (e) {
       console.log(e);
       
+    }
+  }
+
+  async getProfile(req, res) {
+  try {
+      const user = await User.findById(req.user.id)
+      
+      res.status(200).json({ user })
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: "Ошибочка" })
     }
   }
 }

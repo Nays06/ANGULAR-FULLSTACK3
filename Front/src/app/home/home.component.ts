@@ -33,6 +33,10 @@ export class HomeComponent {
     this.router.navigate(['/product', id]);
   }
 
+  goToEdit(id: number) {
+    this.router.navigate(['/edit', id]);
+  }
+
   async ngOnInit() {
     this.products = await this._productService.getProducts();
     this.filterProducts = this.products;
@@ -76,20 +80,14 @@ export class HomeComponent {
     }
   }
 
-  async addProduct() {    
+  async addProduct() {
     try {
       if (this.productName && this.productPrice && this.productDescription && this.productImage) {
-        const formData = new FormData();
-        formData.append('name', this.productName);
-        formData.append('price', this.productPrice);
-        formData.append('description', this.productDescription);
-        formData.append('image', this.productImage); 
-  
-        await axios.post("http://localhost:5000/author/addProduct", formData, {
-  
-        });
-  
-        
+        this._productService.addProduct(this.productName, this.productPrice, this.productDescription, this.productImage).subscribe(
+          response => console.log('Успешно:', response),
+          error => {this.router.navigate(['/login']);}
+        );
+
         this.clearForm();
         this.closeModal();
       } else {
@@ -102,9 +100,10 @@ export class HomeComponent {
   }
 
   async delProduct(id: any) {
-    this._productService.delProduct(id)
-
-    this.filterProducts = this.filterProducts.filter(el => el._id !== id)
+    this._productService.delProduct(id).subscribe(
+      response => {console.log('Успешно:', response); this.filterProducts = this.filterProducts.filter(el => el._id !== id)},
+      error => {this.router.navigate(['/login']);}
+    );
   }
   
   setModal() {

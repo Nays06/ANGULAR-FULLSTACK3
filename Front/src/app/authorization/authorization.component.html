@@ -1,1 +1,36 @@
-<p>authorization works!</p>
+<form class="user-form">
+  <h2>Вход</h2>
+
+  <label for="userName">Username:</label>
+  <input
+    type="text"
+    id="userName"
+    [(ngModel)]="userName"
+    placeholder="Введите username"
+    class="form-input"
+    [ngModelOptions]="{ standalone: true }"
+  />
+
+  <label for="userPassword">Пароль (минимум 6 символов):</label>
+  <input
+    type="password"
+    id="userPassword"
+    [(ngModel)]="userPassword"
+    placeholder="Введите пароль"
+    class="form-input"
+    [ngModelOptions]="{ standalone: true }"
+  />
+
+  <p class="error-message">
+    {{ errorPassword }}
+  </p>
+  <p style="color: red">{{ errorValid }}</p>
+
+  <p class="error-message">{{ error }}</p>
+
+  <!-- <input type="file" onchange="uploadFile(event)"> -->
+
+  <button (click)="login()" class="submit-button">
+    Войти
+  </button>
+</form>

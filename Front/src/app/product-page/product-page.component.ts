@@ -16,14 +16,11 @@ export class ProductPageComponent {
   product: any = {}
 
   async ngOnInit(): Promise<void> {
-    // Получаем ID товара из маршрута
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
       // Загружаем данные о товаре по его ID
       this.product = await this.productService.getProduct(this.id);
-      console.log(this.product);
-      
     }
   }
 

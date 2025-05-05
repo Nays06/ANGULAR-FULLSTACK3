@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const User = require("../models/User");
 
 class ProductController {
   async addProduct(req, res) {
@@ -36,41 +37,48 @@ class ProductController {
       const id = req.params.id;
       const product = await Product.findByIdAndDelete({ "_id": id });
       res.json({message: "Product deleted", product});
-    } catch (e) {}
+    } catch (e) {
+      res.status(500).json({message: "Ошибка удаления"})
+      console.log(e);
+    }
   }
 
   async getProducts(req, res) {
     try {
       const products = await Product.find();
       res.json(products);
-    } catch (e) {}
-  }
-
-  async getOneProduct(req, res) {
-    console.log(req.params);
-    
-    try {
-      const id = req.params.id;
-      const product = await Product.findById({ "_id": id });
-      res.json(product);
-    } catch (e) {}
-  }
-
-  async updateProduct(req, res) {
-    try {
-      const id = req.params.id;
-      const {title, price, description} = req.body;
-
-      const product = await Product.findByIdAndUpdate({ "_id": id }, {title: title, price: price, description: description});
-    
-      
-      res.status(200).json({message: "Продукт изменен"})
     } catch (e) {
+      res.status(500).json({message: "Ошибка выдачи продуктов"})
       console.log(e);
     }
   }
 
- 
+  async getOneProduct(req, res) {
+    try {
+      const id = req.params.id;
+      const product = await Product.findById({ "_id": id });
+      res.json(product);
+    } catch (e) {
+      res.status(500).json({message: "Ошибка выдачи одного продукта"})
+      console.log(e);
+    }
+  }
+
+  async updateProduct(req, res) {
+    try {
+      const user = await User.findById(req.user.id)
+      const id = req.params.id;
+      const {name, price, description} = req.body;
+
+      const product = await Product.findByIdAndUpdate({ "_id": id }, { name: name, price: price, description: description });
+    
+      
+      res.status(200).json({message: "Продукт изменен"})
+    } catch (e) {
+      res.status(500).json({message: "Ошибка изменения"})
+      console.log(e);
+    }
+  }
 }
 
 module.exports = new ProductController();

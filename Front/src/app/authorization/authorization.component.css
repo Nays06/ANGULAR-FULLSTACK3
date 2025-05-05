@@ -1,0 +1,158 @@
+.user-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .user-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 14px;
+    margin-top: 15px;
+  }
+  
+  .user-form label:first-child {
+    margin-top: 0;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  }
+  
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  input[type="password"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin: 10px 0 15px 0;
+    font-weight: 500;
+  }
+  
+  .password-mismatch {
+    color: #e74c3c;
+    font-size: 13px;
+    margin: 0 0 15px 0;
+    font-weight: 500;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .submit-button:hover {
+    background-color: #3a7bc8;
+  }
+  
+  .submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  
+  .avatar-preview {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .avatar-preview img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+  }
+  
+  
+  .user-form {
+    max-width: 450px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+  
+  .user-form h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+  
+  .success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeIn 0.5s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .input-error {
+    border-color: #e74c3c !important;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin: 10px 0;
+    font-weight: 500;
+  }
+  
+  .error-hint {
+    color: #e67e22;
+    font-size: 13px;
+    margin: 0 0 10px 0;
+  }
+  
+  

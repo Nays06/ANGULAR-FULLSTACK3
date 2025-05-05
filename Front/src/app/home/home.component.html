@@ -68,7 +68,7 @@
         <div class="card-description">{{ product.description }}</div>
         <p class="card-price">{{ product.price }}</p>
         <button
-          (click)="addProductBasket(product)"
+          (click)="addProductBasket(product); $event.stopPropagation()"
           class="add-to-cart-btn"
           [ngClass]="{ 'added': addCart[product.id] }"
           [disabled]="addCart[product.id]"
@@ -76,8 +76,12 @@
           {{ addCart[product.id] ? 'Добавлено в корзину ✅' : 'Добавить в корзину' }}
         </button>
 
-        <button (click)="delProduct(product._id)" class="add-to-cart-btn">
+        <button (click)="delProduct(product._id); $event.stopPropagation()" class="add-to-cart-btn">
           Удалить
+        </button>
+
+        <button (click)="goToEdit(product._id); $event.stopPropagation()" class="add-to-cart-btn">
+          Изменить
         </button>
       </div>
     </div>

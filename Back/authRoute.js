@@ -16,5 +16,6 @@ router.post("/registration", upload.single("avatar"), [
 ]);
 router.post("/login", controller.login);
 router.get("/users", authMiddleware, controller.getUsers);
+router.get("/profile", authMiddleware, controller.getProfile);
 
 module.exports = router;
