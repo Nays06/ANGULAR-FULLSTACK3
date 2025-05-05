@@ -26,9 +26,11 @@
     </div>
 
     <div class="form-group">
-      <label for="productImage">Ссылка на изображение:</label>
+      <label for="productImage">Фото:</label>
       <input
       type="file"
+      accept="image/png, image/jpeg, image/jpg"
+      multiple
       id="productImage"
       (change)="onfileSelected($event)"
       class="form-input"
@@ -61,7 +63,7 @@
   @for (product of filterProducts; track $index) {
     <div class="card" (click)="goToProduct(product._id)">
       <div class="img-card">
-        <img width="100px" [src]="`http://localhost:5000/${product.image}`" alt="" />
+        <img width="100px" [src]="product.image.indexOf(' , ') > 0 ? `http://localhost:5000/${product.image.slice(0, product.image.indexOf(' , '))}` : `http://localhost:5000/${product.image}`" alt="" />
       </div>
       <div class="card-info">
         <p class="card-title">{{ product.name }}</p>

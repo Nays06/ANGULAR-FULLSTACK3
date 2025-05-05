@@ -8,10 +8,12 @@ class ProductController {
   
       let imagePaths = '';
       if (req.files && req.files.length > 0) {
-        req.files.forEach((file) => {
-          imagePaths += file.path + ',';
+        req.files.forEach((file, index) => {
+          imagePaths += file.path;
+          if(index + 1 < req.files.length) {
+            imagePaths += ' , ';
+          }
         });
-        imagePaths = imagePaths.slice(0, -1); 
       } else {
         return res.status(400).json({ message: "Нет загруженных изображений" });
       }
@@ -25,7 +27,7 @@ class ProductController {
       });
   
       await product.save();
-      return res.status(200).json("Продукт успешно добавлен!");
+      return res.status(200).json({ message: "Продукт успешно добавлен!", product });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: "Ошибка добавления продукта" });

@@ -2,6 +2,13 @@
     <input type="text" class="form-input" placeholder="Название" [(ngModel)]="name" >
     <input type="number" class="form-input" placeholder="Цена" [(ngModel)]="price" >
     <input type="text" class="form-input" placeholder="Описание" [(ngModel)]="description" >
+    <div class="images">
+        @for (image of product.image?.split(" , "); track $index) {
+            <div class="image">
+                <img [src]="`http://localhost:5000/${image}`" alt="" width="150">
+            </div>
+        }
+    </div>
     <input type="file" class="form-file">
     <button class="form-button" (click)="editProduct()">Изменить</button>
 </div>

@@ -23,7 +23,7 @@ export class EditProductComponent {
 
     if (this.id) {
       this.product = await this.productService.getProduct(this.id);
-
+      
       this.name = this.product?.name
       this.price = this.product?.price
       this.description = this.product?.description
@@ -34,7 +34,8 @@ export class EditProductComponent {
   editProduct() {
     this.productService.editProduct({ _id: this.product._id, name: this.name, price: this.price, description: this.description }).subscribe({
       next: (res: any) => {
-        alert(res.message)
+        alert(res.message);
+        this.router.navigate(['/home']);
       },
       error: (error: any) => {
         console.error('Error editing product:', error);

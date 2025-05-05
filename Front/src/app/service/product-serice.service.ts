@@ -27,7 +27,14 @@ export class ProductSericeService {
     formData.append('name', productName);
     formData.append('price', productPrice);
     formData.append('description', productDescription);
-    formData.append('image', productImage);
+
+    if (productImage && Array.isArray(productImage)) {
+      productImage.forEach((file) => {
+        formData.append(`image[]`, file);
+      });
+    } else if (productImage instanceof File) {
+      formData.append('image[]', productImage);
+    }
   
     return this.http.post("http://localhost:5000/product/addProduct", formData);
   }

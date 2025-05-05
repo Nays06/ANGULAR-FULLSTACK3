@@ -20,7 +20,7 @@ export class HomeComponent {
   productDescription = "";
 
   productPrice = ""
-  productImage: any = "https://paint-center.ru/storage/article/new-product.png"
+  productImage: any = ""
   error = ""
   modal: boolean = false
   filterProducts: any[] = [];
@@ -53,7 +53,7 @@ export class HomeComponent {
   clearForm() {
     this.productName = "";
     this.productPrice = "";
-    this.productImage = "";
+    this.productImage = [];
     this.productDescription = "";
     this.error = "";
   }
@@ -61,32 +61,51 @@ export class HomeComponent {
 
   onfileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-
-      const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+  
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    const validFiles: File[] = [];
+    let errorMessage = "";
+  
+    Array.from(input.files).forEach((file, index) => {
       if (!allowedTypes.includes(file.type)) {
-        this.error = "Допустимы только изоображения JPEG , JPG или PNG";
+        errorMessage += `Файл ${index + 1}: Допустимы только изображения JPEG, JPG или PNG\n`;
         return;
       }
-
-      if (file.size > 2 * 1024 * 1024) {
-        this.error = "Размер файла не должен привышать 2МБ";
+  
+      if (file.size > maxSize) {
+        errorMessage += `Файл ${index + 1}: Размер файла не должен превышать 2МБ\n`;
         return;
       }
-
-      this.productImage = file;
-      this.error = " ";
+  
+      validFiles.push(file);
+    });
+  
+    if (errorMessage) {
+      this.error = errorMessage.trim();
+    } else {
+      this.error = "";
+      this.productImage = validFiles;
     }
   }
+  
 
   async addProduct() {
     try {
       if (this.productName && this.productPrice && this.productDescription && this.productImage) {
         this._productService.addProduct(this.productName, this.productPrice, this.productDescription, this.productImage).subscribe(
-          response => console.log('Успешно:', response),
-          error => {this.router.navigate(['/login']);}
+          (response: any) => {
+            console.log('Успешно:', response); 
+            this.filterProducts.push(response.product);
+          },
+          error => {
+            this.router.navigate(['/login']);
+          }
         );
+        
 
         this.clearForm();
         this.closeModal();

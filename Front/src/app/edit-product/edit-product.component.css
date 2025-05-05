@@ -58,3 +58,11 @@ input[type="file"]::file-selector-button {
     cursor: pointer;
     margin-right: 10px;
 }
+
+.images{
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 20px;
+}

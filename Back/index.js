@@ -1,9 +1,8 @@
 const express = require("express");
 const cors = require('cors')
 const { default: mongoose } = require("mongoose");
-const authRouter = require("./authRoute");
-const productRoute = require("./controllers/productRoute");
-const productController = require("./controllers/productController");
+const authRouter = require("./routes/authRoute");
+const productRoute = require("./routes/productRoute");
 const PORT = process.env.PORT || 5000;
 
 const app = express({ limit: "100mb" });

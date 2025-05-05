@@ -19,7 +19,6 @@ export class ProductPageComponent {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
-      // Загружаем данные о товаре по его ID
       this.product = await this.productService.getProduct(this.id);
     }
   }
