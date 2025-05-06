@@ -1,4 +1,6 @@
-<button class="btn-modal" (click)="setModal()">Добавить товар</button>
+@if (isAdmin) {
+  <button class="btn-modal" (click)="setModal()">Добавить товар</button>
+}
 
 <div *ngIf="modal" class="modal-overlay" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
@@ -49,7 +51,7 @@
       />
     </div>
 
-    <p class="error-message">{{ error }}</p>
+    <p class="error-message" [innerHTML]="error"></p>
 
     <button class="submit-button" (click)="addProduct()">Добавить</button>
   </div>
@@ -78,13 +80,15 @@
           {{ addCart[product.id] ? 'Добавлено в корзину ✅' : 'Добавить в корзину' }}
         </button>
 
-        <button (click)="delProduct(product._id); $event.stopPropagation()" class="add-to-cart-btn">
-          Удалить
-        </button>
-
-        <button (click)="goToEdit(product._id); $event.stopPropagation()" class="add-to-cart-btn">
-          Изменить
-        </button>
+        @if (isAdmin) {
+          <button (click)="delProduct(product._id); $event.stopPropagation()" class="add-to-cart-btn">
+            Удалить
+          </button>
+  
+          <button (click)="goToEdit(product._id); $event.stopPropagation()" class="add-to-cart-btn">
+            Изменить
+          </button>
+        }
       </div>
     </div>
   }

@@ -45,11 +45,13 @@ class authController {
       });
       if (req.file) {
         user.avatar = req.file.path;
+      } else {
+        user.avatar = "uploads/user_no-image.jpg"
       }
 
       await user.save();
       const message = {
-       
+
         to: req.body.email,
         subject: "Подтверждение электронной почты",
         text: `Поздравляем вы успешно зарегистрировались на нашем сайте

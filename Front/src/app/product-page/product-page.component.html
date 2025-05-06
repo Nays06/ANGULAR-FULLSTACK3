@@ -1,3 +1,25 @@
-<p>product-page works! {{ id }}</p>
-
-<h1>{{ product.name }}</h1>
+<div class="product-container">
+        <div class="product-header">
+            <div class="product-gallery">
+                <img id="mainImage" [src]="`http://localhost:5000/${currentImage}`" alt="Товар 2" class="main-image">
+                <div class="thumbnail-container">
+                    @for (image of product.image?.split(" , "); track $index) {
+                        <div class="image">
+                            <img [src]="`http://localhost:5000/${image}`" alt="Товар 2 - миниатюра 1" class="thumbnail" width="250" (click)="currentImage = image">
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1 class="product-title">{{ product.name }}</h1>
+                <div class="product-price">{{ product.price }} ₽</div>
+                <p class="product-description">{{ product.description }}</p>
+                <button class="add-to-cart">Добавить в корзину</button>
+                
+                <div class="product-meta">
+                    <p>Артикул: {{ product._id }}</p>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -27,7 +27,6 @@ export class EditProductComponent {
       this.name = this.product?.name
       this.price = this.product?.price
       this.description = this.product?.description
-      
     }
   }
 

@@ -4,6 +4,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import axios from "axios";
 import { Router } from '@angular/router';
+import { LoginService } from '../service/login.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   private _productService: ProductSericeService;
+  isAdmin: boolean = false
+
   products: any[] = [];
   addCart: { [key: number]: boolean } = {};
   basket: any[] = [];
@@ -25,9 +28,24 @@ export class HomeComponent {
   modal: boolean = false
   filterProducts: any[] = [];
 
-  constructor(ProductSericeService: ProductSericeService, private router: Router) {
+  constructor(ProductSericeService: ProductSericeService, private router: Router, private authorization: LoginService) {
     this._productService = ProductSericeService;
   }
+
+  // constructor(private authorization: LoginService) {}
+
+  // ngOnInit() {
+  //   this.authorization.getProfile().subscribe({
+  //     next: (res: any) => {
+  //       this.user = res.user;
+  //       console.log(this.user);
+        
+  //     },
+  //     error: (error: any) => {
+  //       console.error('Error fetching profile:', error);
+  //     }
+  //   });
+  // }
 
   goToProduct(id: number) {
     this.router.navigate(['/product', id]);
@@ -40,6 +58,16 @@ export class HomeComponent {
   async ngOnInit() {
     this.products = await this._productService.getProducts();
     this.filterProducts = this.products;
+
+    this.authorization.getProfile().subscribe({
+      next: (res: any) => {
+        this.isAdmin = res.user.roles[0] === "ADMIN";
+        console.log(this.isAdmin);
+      },
+      error: (error: any) => {
+        console.error('Error fetching profile:', error);
+      }
+    });
   }
 
   addProductBasket(product: any) {
@@ -72,12 +100,12 @@ export class HomeComponent {
   
     Array.from(input.files).forEach((file, index) => {
       if (!allowedTypes.includes(file.type)) {
-        errorMessage += `Файл ${index + 1}: Допустимы только изображения JPEG, JPG или PNG\n`;
+        errorMessage += `<span title="${file.name}">Файл ${index + 1}: Допустимы только изображения JPEG, JPG или PNG</span><br>`;
         return;
       }
   
       if (file.size > maxSize) {
-        errorMessage += `Файл ${index + 1}: Размер файла не должен превышать 2МБ\n`;
+        errorMessage += `<span title="${file.name}">Файл ${index + 1}: Размер файла не должен превышать 2МБ</span><br>`;
         return;
       }
   
@@ -85,7 +113,7 @@ export class HomeComponent {
     });
   
     if (errorMessage) {
-      this.error = errorMessage.trim();
+      this.error = errorMessage;
     } else {
       this.error = "";
       this.productImage = validFiles;
@@ -95,7 +123,7 @@ export class HomeComponent {
 
   async addProduct() {
     try {
-      if (this.productName && this.productPrice && this.productDescription && this.productImage) {
+      if (this.productName && this.productPrice && this.productDescription) {
         this._productService.addProduct(this.productName, this.productPrice, this.productDescription, this.productImage).subscribe(
           (response: any) => {
             console.log('Успешно:', response); 

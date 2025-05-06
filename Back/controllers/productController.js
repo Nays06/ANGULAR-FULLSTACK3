@@ -4,6 +4,12 @@ const User = require("../models/User");
 class ProductController {
   async addProduct(req, res) {
     try {
+
+      if(req.user.roles[0] !== "ADMIN") {
+        console.log("Нет Доступа");
+        return res.status(400).json({ error: "Нет Доступа" })
+      }
+
       const { name, price, description } = req.body;
   
       let imagePaths = '';
@@ -14,16 +20,17 @@ class ProductController {
             imagePaths += ' , ';
           }
         });
-      } else {
-        return res.status(400).json({ message: "Нет загруженных изображений" });
-      }
+      } 
+      // else {
+      //   return res.status(400).json({ message: "Нет загруженных изображений" });
+      // }
   
     
       const product = new Product({
         name,
         description,
         price,
-        image: imagePaths,
+        image: imagePaths || "uploads/no_img.png",
       });
   
       await product.save();
@@ -36,6 +43,12 @@ class ProductController {
   
   async deleteOneProduct(req, res) {
     try {
+
+      if(req.user.roles[0] !== "ADMIN") {
+        console.log("Нет Доступа");
+        return res.status(400).json({ error: "Нет Доступа" })
+      }
+
       const id = req.params.id;
       const product = await Product.findByIdAndDelete({ "_id": id });
       res.json({message: "Product deleted", product});
@@ -68,7 +81,12 @@ class ProductController {
 
   async updateProduct(req, res) {
     try {
-      const user = await User.findById(req.user.id)
+
+      if(req.user.roles[0] !== "ADMIN") {
+        console.log("Нет Доступа");
+        return res.status(400).json({ error: "Нет Доступа" })
+      }
+
       const id = req.params.id;
       const {name, price, description} = req.body;
 

@@ -14,12 +14,14 @@ export class ProductPageComponent {
 
   id: any = ""
   product: any = {}
+  currentImage: string = ""
 
   async ngOnInit(): Promise<void> {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
       this.product = await this.productService.getProduct(this.id);
+      this.currentImage = this.product.image?.split(" , ")[0]
     }
   }
 
